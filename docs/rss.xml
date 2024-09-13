@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Kadriye's Blog</title><link>https://K1314047.github.io/githubblog</link><description>Blog description</description><copyright>Kadriye's Blog</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://avatars.githubusercontent.com/u/110350083?v=4</url><title>avatar</title><link>https://K1314047.github.io/githubblog</link></image><lastBuildDate>Fri, 13 Sep 2024 14:14:38 +0000</lastBuildDate><managingEditor>Kadriye's Blog</managingEditor><ttl>60</ttl><webMaster>Kadriye's Blog</webMaster><item><title>海纳思挂在外置移动硬盘</title><link>https://K1314047.github.io/githubblog/post/hai-na-si-gua-zai-wai-zhi-yi-dong-ying-pan.html</link><description>#### 挂载外置硬盘&#13;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Kadriye's Blog</title><link>https://k1314047.github.io</link><description>博文并不是原创，都是根据网络上的教程自己完成之后再文字记录一边，加强一下记忆而已，本人不是专业人员，只是个爱好者，email:a@top.us</description><copyright>Kadriye's Blog</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://avatars.githubusercontent.com/u/110350083?v=4</url><title>avatar</title><link>https://k1314047.github.io</link></image><lastBuildDate>Fri, 13 Sep 2024 16:10:45 +0000</lastBuildDate><managingEditor>Kadriye's Blog</managingEditor><ttl>60</ttl><webMaster>Kadriye's Blog</webMaster><item><title>海纳思挂在外置移动硬盘</title><link>https://k1314047.github.io/post/hai-na-si-gua-zai-wai-zhi-yi-dong-ying-pan.html</link><description>#### 挂载外置硬盘&#13;
 &#13;
 1、第一次挂载硬盘需要格式化，输入下面命令一键格式并挂载，执行命令之前一定要把你硬盘的资料备份一下&#13;
 &#13;
@@ -152,7 +152,7 @@ rm home&#13;
 ln -s /mnt/sda1/home&#13;
 ```&#13;
 &#13;
-。</description><guid isPermaLink="true">https://K1314047.github.io/githubblog/post/hai-na-si-gua-zai-wai-zhi-yi-dong-ying-pan.html</guid><pubDate>Fri, 13 Sep 2024 14:12:27 +0000</pubDate></item><item><title>海纳思利用ZeroTier添加免费内网穿透服务</title><link>https://K1314047.github.io/githubblog/post/hai-na-si-li-yong-ZeroTier-tian-jia-mian-fei-nei-wang-chuan-tou-fu-wu.html</link><description>##### 一、[[注册ZeroTier](https://www.zerotier.com/)](https://www.zerotier.com/) 获取到Network ID&#13;
+。</description><guid isPermaLink="true">https://k1314047.github.io/post/hai-na-si-gua-zai-wai-zhi-yi-dong-ying-pan.html</guid><pubDate>Fri, 13 Sep 2024 14:12:27 +0000</pubDate></item><item><title>海纳思利用ZeroTier添加免费内网穿透服务</title><link>https://k1314047.github.io/post/hai-na-si-li-yong-ZeroTier-tian-jia-mian-fei-nei-wang-chuan-tou-fu-wu.html</link><description>##### 一、[[注册ZeroTier](https://www.zerotier.com/)](https://www.zerotier.com/) 获取到Network ID&#13;
 &#13;
 ##### 二、海纳思终端依次输入&#13;
 &#13;
@@ -168,9 +168,4 @@ curl -s **[https://install.zerotier.com](https://install.zerotier.com/)** | sudo
 zerotier-cli join b15644912eXXXXX5（b15644912eXXXXX5部分为自己的Network ID&#13;
 ```&#13;
 &#13;
-##### 三、把要添加的手机或电脑在网站上加入同一个成员组即可。</description><guid isPermaLink="true">https://K1314047.github.io/githubblog/post/hai-na-si-li-yong-ZeroTier-tian-jia-mian-fei-nei-wang-chuan-tou-fu-wu.html</guid><pubDate>Fri, 13 Sep 2024 14:03:37 +0000</pubDate></item><item><title>vrdfg</title><link>https://K1314047.github.io/githubblog/post/vrdfg.html</link><description>dafewaf&#13;
-![icons8-微软-48](https://github.com/user-attachments/assets/ad908534-9bcf-4e55-b3c4-6b84a5498039)&#13;
-。</description><guid isPermaLink="true">https://K1314047.github.io/githubblog/post/vrdfg.html</guid><pubDate>Thu, 12 Sep 2024 04:02:25 +0000</pubDate></item><item><title># 为什么要投资比特币？</title><link>https://K1314047.github.io/githubblog/post/%23%20-wei-shen-me-yao-tou-zi-bi-te-bi-%EF%BC%9F.html</link><description>作者：Kadriye&#13;
-博客：[[https://wiki.1314047.xyz](https://wiki.1314047.xy/)](https://wiki.1314047.xy/)&#13;
-&#13;
-&gt; 沉淀、分享、成长，让自己和他人都能有所收获！😄。</description><guid isPermaLink="true">https://K1314047.github.io/githubblog/post/%23%20-wei-shen-me-yao-tou-zi-bi-te-bi-%EF%BC%9F.html</guid><pubDate>Thu, 12 Sep 2024 03:25:34 +0000</pubDate></item></channel></rss>
+##### 三、把要添加的手机或电脑在网站上加入同一个成员组即可。</description><guid isPermaLink="true">https://k1314047.github.io/post/hai-na-si-li-yong-ZeroTier-tian-jia-mian-fei-nei-wang-chuan-tou-fu-wu.html</guid><pubDate>Fri, 13 Sep 2024 14:03:37 +0000</pubDate></item></channel></rss>
