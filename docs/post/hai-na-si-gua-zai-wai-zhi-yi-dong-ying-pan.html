@@ -54,7 +54,116 @@ vi /etc/samba/smb.conf
 ```
 
 2、进入之后按下insert键，然后将光标移到
-![notion image](https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2Fe7017e85-e5e3-4b15-989b-caaf9be8dbe4%2F03cacd6b-06f3-4d72-90c2-8c5f3ad89c3c%2Fimage.png?table=block&id=a061d62b-bdc2-435a-8b8d-7c9b2fc3713b&t=a061d62b-bdc2-435a-8b8d-7c9b2fc3713b&width=241&cache=v2)。">
+![notion image](https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2Fe7017e85-e5e3-4b15-989b-caaf9be8dbe4%2F03cacd6b-06f3-4d72-90c2-8c5f3ad89c3c%2Fimage.png?table=block&id=a061d62b-bdc2-435a-8b8d-7c9b2fc3713b&t=a061d62b-bdc2-435a-8b8d-7c9b2fc3713b&width=241&cache=v2)
+3、先复制两个一样的代码然后再修改成下面的代码
+
+```javascript
+[downloads]
+  path = /mnt/sda1/downloads
+  read only = no
+  guest ok =yes
+  create mask =0777
+  directory mask = 0777
+  browseable = yes
+[files]
+  path = /mnt/sda1/files
+  read only = no
+  guest ok =yes
+  create mask =0777
+  directory mask = 0777
+  browseable = yes
+[home]
+  path = /mnt/sda1/home
+  read only = no
+  guest ok =yes
+  create mask =0777
+  directory mask = 0777
+  browseable = yes
+```
+
+ 4、修改完成上面的代码之后按esc（取消） 再输入：wq（退出）
+
+ 5、退出之后输入重启smb命令
+
+```javascript
+systemctl restart smbd   
+```
+
+6、完成重启之后就可以在此电脑-网络位置添加外置硬盘了
+
+输入：\\海纳思ip\downloads
+
+​            \\海纳思ip\files
+
+​             \\海纳思ip\home
+![notion image](https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2Fe7017e85-e5e3-4b15-989b-caaf9be8dbe4%2Fc8eb54c2-dd3e-4afa-a54b-05447a94cf5a%2Fimage.png?table=block&id=56a2f900-7eac-4cd8-8bae-9889cd20b6d9&t=56a2f900-7eac-4cd8-8bae-9889cd20b6d9&width=810&cache=v2)
+#### **BT下载配置文件 下载地址修改**
+
+1、停止bt下载命令
+
+```javascript
+/etc/init.d/transmission-daemon stop
+```
+
+2、输入以下命令进行编辑
+
+```javascript
+vi /etc/transmission-daemon/settings.json
+```
+
+3、进入之后按下insert键，然后将光标移到下图然后修改成/mnt/sda1/downloads
+![notion image](https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2Fe7017e85-e5e3-4b15-989b-caaf9be8dbe4%2F6e23e520-492f-4cea-904a-9c1d6e6e2ac8%2Fimage.png?table=block&id=67d1f863-6e3e-4ab8-808c-bfc3835b9cd4&t=67d1f863-6e3e-4ab8-808c-bfc3835b9cd4&width=559&cache=v2)
+4、修改完成上面的代码之后按esc（取消） 再输入：wq（退出）
+
+5、退出之后输入开启bt下载命令
+
+```javascript
+/etc/init.d/transmission-daemon start
+```
+
+开启之后回到海纳思首页点开BT下载，在最下方显示可用空间为你外置硬盘的容量就说明挂载成功了
+![notion image](https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2Fe7017e85-e5e3-4b15-989b-caaf9be8dbe4%2F30774d4a-337d-41f3-b9e4-8ce4c930d75f%2Fimage.png?table=block&id=cd88a0af-f1cf-4c17-adcf-4830593b68da&t=cd88a0af-f1cf-4c17-adcf-4830593b68da&width=609&cache=v2)
+#### 直连下载配置文件下载地址修改
+
+1、输入以下命令进行编辑
+
+```javascript
+vi /usr/local/aria2/aria2.conf
+```
+
+2、进入之后按下insert键，然后将光标移到下图然后修改成/mnt/sda1/downloads
+![notion image](https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2Fe7017e85-e5e3-4b15-989b-caaf9be8dbe4%2Fb047548b-1c3f-4e59-aec0-66ea4fcee724%2Fimage.png?table=block&id=a28bf0f0-3f10-4e3f-989f-f547784b591d&t=a28bf0f0-3f10-4e3f-989f-f547784b591d&width=666&cache=v2)
+3、修改完成上面的代码之后按esc（取消） 再输入：wq（退出）
+
+4、退出之后输入重启smb命令
+
+```javascript
+systemctl restart aria2c.service
+```
+
+重启之后回到海纳思首页点开直连下载打开aria2设置-基本设置，查看下载路是否已更改到你的硬盘位置，显示硬盘位置说明就已经挂载成功了
+
+### 本地网盘硬盘位置更改
+
+进入本地网盘现在位置：
+
+```javascript
+cd /var/www/html/files/
+```
+
+输入删除默认路劲命令
+
+```javascript
+rm home
+```
+
+建立软连接到硬盘
+
+```javascript
+ln -s /mnt/sda1/home
+```
+
+。">
 <meta property="og:title" content="海纳思挂在外置移动硬盘">
 <meta property="og:description" content="#### 挂载外置硬盘
 
@@ -100,7 +209,116 @@ vi /etc/samba/smb.conf
 ```
 
 2、进入之后按下insert键，然后将光标移到
-![notion image](https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2Fe7017e85-e5e3-4b15-989b-caaf9be8dbe4%2F03cacd6b-06f3-4d72-90c2-8c5f3ad89c3c%2Fimage.png?table=block&id=a061d62b-bdc2-435a-8b8d-7c9b2fc3713b&t=a061d62b-bdc2-435a-8b8d-7c9b2fc3713b&width=241&cache=v2)。">
+![notion image](https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2Fe7017e85-e5e3-4b15-989b-caaf9be8dbe4%2F03cacd6b-06f3-4d72-90c2-8c5f3ad89c3c%2Fimage.png?table=block&id=a061d62b-bdc2-435a-8b8d-7c9b2fc3713b&t=a061d62b-bdc2-435a-8b8d-7c9b2fc3713b&width=241&cache=v2)
+3、先复制两个一样的代码然后再修改成下面的代码
+
+```javascript
+[downloads]
+  path = /mnt/sda1/downloads
+  read only = no
+  guest ok =yes
+  create mask =0777
+  directory mask = 0777
+  browseable = yes
+[files]
+  path = /mnt/sda1/files
+  read only = no
+  guest ok =yes
+  create mask =0777
+  directory mask = 0777
+  browseable = yes
+[home]
+  path = /mnt/sda1/home
+  read only = no
+  guest ok =yes
+  create mask =0777
+  directory mask = 0777
+  browseable = yes
+```
+
+ 4、修改完成上面的代码之后按esc（取消） 再输入：wq（退出）
+
+ 5、退出之后输入重启smb命令
+
+```javascript
+systemctl restart smbd   
+```
+
+6、完成重启之后就可以在此电脑-网络位置添加外置硬盘了
+
+输入：\\海纳思ip\downloads
+
+​            \\海纳思ip\files
+
+​             \\海纳思ip\home
+![notion image](https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2Fe7017e85-e5e3-4b15-989b-caaf9be8dbe4%2Fc8eb54c2-dd3e-4afa-a54b-05447a94cf5a%2Fimage.png?table=block&id=56a2f900-7eac-4cd8-8bae-9889cd20b6d9&t=56a2f900-7eac-4cd8-8bae-9889cd20b6d9&width=810&cache=v2)
+#### **BT下载配置文件 下载地址修改**
+
+1、停止bt下载命令
+
+```javascript
+/etc/init.d/transmission-daemon stop
+```
+
+2、输入以下命令进行编辑
+
+```javascript
+vi /etc/transmission-daemon/settings.json
+```
+
+3、进入之后按下insert键，然后将光标移到下图然后修改成/mnt/sda1/downloads
+![notion image](https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2Fe7017e85-e5e3-4b15-989b-caaf9be8dbe4%2F6e23e520-492f-4cea-904a-9c1d6e6e2ac8%2Fimage.png?table=block&id=67d1f863-6e3e-4ab8-808c-bfc3835b9cd4&t=67d1f863-6e3e-4ab8-808c-bfc3835b9cd4&width=559&cache=v2)
+4、修改完成上面的代码之后按esc（取消） 再输入：wq（退出）
+
+5、退出之后输入开启bt下载命令
+
+```javascript
+/etc/init.d/transmission-daemon start
+```
+
+开启之后回到海纳思首页点开BT下载，在最下方显示可用空间为你外置硬盘的容量就说明挂载成功了
+![notion image](https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2Fe7017e85-e5e3-4b15-989b-caaf9be8dbe4%2F30774d4a-337d-41f3-b9e4-8ce4c930d75f%2Fimage.png?table=block&id=cd88a0af-f1cf-4c17-adcf-4830593b68da&t=cd88a0af-f1cf-4c17-adcf-4830593b68da&width=609&cache=v2)
+#### 直连下载配置文件下载地址修改
+
+1、输入以下命令进行编辑
+
+```javascript
+vi /usr/local/aria2/aria2.conf
+```
+
+2、进入之后按下insert键，然后将光标移到下图然后修改成/mnt/sda1/downloads
+![notion image](https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2Fe7017e85-e5e3-4b15-989b-caaf9be8dbe4%2Fb047548b-1c3f-4e59-aec0-66ea4fcee724%2Fimage.png?table=block&id=a28bf0f0-3f10-4e3f-989f-f547784b591d&t=a28bf0f0-3f10-4e3f-989f-f547784b591d&width=666&cache=v2)
+3、修改完成上面的代码之后按esc（取消） 再输入：wq（退出）
+
+4、退出之后输入重启smb命令
+
+```javascript
+systemctl restart aria2c.service
+```
+
+重启之后回到海纳思首页点开直连下载打开aria2设置-基本设置，查看下载路是否已更改到你的硬盘位置，显示硬盘位置说明就已经挂载成功了
+
+### 本地网盘硬盘位置更改
+
+进入本地网盘现在位置：
+
+```javascript
+cd /var/www/html/files/
+```
+
+输入删除默认路劲命令
+
+```javascript
+rm home
+```
+
+建立软连接到硬盘
+
+```javascript
+ln -s /mnt/sda1/home
+```
+
+。">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://K1314047.github.io/githubblog/post/hai-na-si-gua-zai-wai-zhi-yi-dong-ying-pan.html">
 <meta property="og:image" content="https://avatars.githubusercontent.com/u/110350083?v=4">
@@ -192,7 +410,65 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <p>1、输入以下命令进行编辑</p>
 <div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-s1">vi</span> <span class="pl-c1">/</span><span class="pl-s1">etc</span><span class="pl-c1">/</span><span class="pl-s1">samba</span><span class="pl-c1">/</span><span class="pl-s1">smb</span><span class="pl-kos">.</span><span class="pl-c1">conf</span></pre></div>
 <p>2、进入之后按下insert键，然后将光标移到<br>
-<a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/0d4f47608d88ac97a7555a3774fe8675048814f258af714073dc428df4051972/68747470733a2f2f7777772e6e6f74696f6e2e736f2f696d6167652f687474707325334125324625324670726f642d66696c65732d7365637572652e73332e75732d776573742d322e616d617a6f6e6177732e636f6d25324665373031376538352d653565332d346231352d393839622d63616166396265386462653425324630336361636436622d303666332d346437322d393063322d386335663361643839633363253246696d6167652e706e673f7461626c653d626c6f636b2669643d61303631643632622d626463322d343335612d386238642d37633962326663333731336226743d61303631643632622d626463322d343335612d386238642d3763396232666333373133622677696474683d3234312663616368653d7632"><img src="https://camo.githubusercontent.com/0d4f47608d88ac97a7555a3774fe8675048814f258af714073dc428df4051972/68747470733a2f2f7777772e6e6f74696f6e2e736f2f696d6167652f687474707325334125324625324670726f642d66696c65732d7365637572652e73332e75732d776573742d322e616d617a6f6e6177732e636f6d25324665373031376538352d653565332d346231352d393839622d63616166396265386462653425324630336361636436622d303666332d346437322d393063322d386335663361643839633363253246696d6167652e706e673f7461626c653d626c6f636b2669643d61303631643632622d626463322d343335612d386238642d37633962326663333731336226743d61303631643632622d626463322d343335612d386238642d3763396232666333373133622677696474683d3234312663616368653d7632" alt="notion image" data-canonical-src="https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2Fe7017e85-e5e3-4b15-989b-caaf9be8dbe4%2F03cacd6b-06f3-4d72-90c2-8c5f3ad89c3c%2Fimage.png?table=block&amp;id=a061d62b-bdc2-435a-8b8d-7c9b2fc3713b&amp;t=a061d62b-bdc2-435a-8b8d-7c9b2fc3713b&amp;width=241&amp;cache=v2" style="max-width: 100%;"></a></p></div>
+<a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/0d4f47608d88ac97a7555a3774fe8675048814f258af714073dc428df4051972/68747470733a2f2f7777772e6e6f74696f6e2e736f2f696d6167652f687474707325334125324625324670726f642d66696c65732d7365637572652e73332e75732d776573742d322e616d617a6f6e6177732e636f6d25324665373031376538352d653565332d346231352d393839622d63616166396265386462653425324630336361636436622d303666332d346437322d393063322d386335663361643839633363253246696d6167652e706e673f7461626c653d626c6f636b2669643d61303631643632622d626463322d343335612d386238642d37633962326663333731336226743d61303631643632622d626463322d343335612d386238642d3763396232666333373133622677696474683d3234312663616368653d7632"><img src="https://camo.githubusercontent.com/0d4f47608d88ac97a7555a3774fe8675048814f258af714073dc428df4051972/68747470733a2f2f7777772e6e6f74696f6e2e736f2f696d6167652f687474707325334125324625324670726f642d66696c65732d7365637572652e73332e75732d776573742d322e616d617a6f6e6177732e636f6d25324665373031376538352d653565332d346231352d393839622d63616166396265386462653425324630336361636436622d303666332d346437322d393063322d386335663361643839633363253246696d6167652e706e673f7461626c653d626c6f636b2669643d61303631643632622d626463322d343335612d386238642d37633962326663333731336226743d61303631643632622d626463322d343335612d386238642d3763396232666333373133622677696474683d3234312663616368653d7632" alt="notion image" data-canonical-src="https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2Fe7017e85-e5e3-4b15-989b-caaf9be8dbe4%2F03cacd6b-06f3-4d72-90c2-8c5f3ad89c3c%2Fimage.png?table=block&amp;id=a061d62b-bdc2-435a-8b8d-7c9b2fc3713b&amp;t=a061d62b-bdc2-435a-8b8d-7c9b2fc3713b&amp;width=241&amp;cache=v2" style="max-width: 100%;"></a><br>
+3、先复制两个一样的代码然后再修改成下面的代码</p>
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-kos">[</span><span class="pl-s1">downloads</span><span class="pl-kos">]</span>
+  <span class="pl-s1">path</span> <span class="pl-c1">=</span> <span class="pl-pds"><span class="pl-c1">/</span>mnt<span class="pl-c1">/</span></span><span class="pl-s1">sda1</span><span class="pl-c1">/</span><span class="pl-s1">downloads</span>
+  <span class="pl-s1">read</span> <span class="pl-s1">only</span> <span class="pl-c1">=</span> <span class="pl-s1">no</span>
+  <span class="pl-s1">guest</span> <span class="pl-s1">ok</span> <span class="pl-c1">=</span><span class="pl-s1">yes</span>
+  <span class="pl-s1">create</span> <span class="pl-s1">mask</span> <span class="pl-c1">=</span><span class="pl-c1">0777</span>
+  <span class="pl-s1">directory</span> <span class="pl-s1">mask</span> <span class="pl-c1">=</span> <span class="pl-c1">0777</span>
+  <span class="pl-s1">browseable</span> <span class="pl-c1">=</span> <span class="pl-s1">yes</span>
+<span class="pl-kos">[</span><span class="pl-s1">files</span><span class="pl-kos">]</span>
+  <span class="pl-s1">path</span> <span class="pl-c1">=</span> <span class="pl-pds"><span class="pl-c1">/</span>mnt<span class="pl-c1">/</span></span><span class="pl-s1">sda1</span><span class="pl-c1">/</span><span class="pl-s1">files</span>
+  <span class="pl-s1">read</span> <span class="pl-s1">only</span> <span class="pl-c1">=</span> <span class="pl-s1">no</span>
+  <span class="pl-s1">guest</span> <span class="pl-s1">ok</span> <span class="pl-c1">=</span><span class="pl-s1">yes</span>
+  <span class="pl-s1">create</span> <span class="pl-s1">mask</span> <span class="pl-c1">=</span><span class="pl-c1">0777</span>
+  <span class="pl-s1">directory</span> <span class="pl-s1">mask</span> <span class="pl-c1">=</span> <span class="pl-c1">0777</span>
+  <span class="pl-s1">browseable</span> <span class="pl-c1">=</span> <span class="pl-s1">yes</span>
+<span class="pl-kos">[</span><span class="pl-s1">home</span><span class="pl-kos">]</span>
+  <span class="pl-s1">path</span> <span class="pl-c1">=</span> <span class="pl-pds"><span class="pl-c1">/</span>mnt<span class="pl-c1">/</span></span><span class="pl-s1">sda1</span><span class="pl-c1">/</span><span class="pl-s1">home</span>
+  <span class="pl-s1">read</span> <span class="pl-s1">only</span> <span class="pl-c1">=</span> <span class="pl-s1">no</span>
+  <span class="pl-s1">guest</span> <span class="pl-s1">ok</span> <span class="pl-c1">=</span><span class="pl-s1">yes</span>
+  <span class="pl-s1">create</span> <span class="pl-s1">mask</span> <span class="pl-c1">=</span><span class="pl-c1">0777</span>
+  <span class="pl-s1">directory</span> <span class="pl-s1">mask</span> <span class="pl-c1">=</span> <span class="pl-c1">0777</span>
+  <span class="pl-s1">browseable</span> <span class="pl-c1">=</span> <span class="pl-s1">yes</span></pre></div>
+<p>4、修改完成上面的代码之后按esc（取消） 再输入：wq（退出）</p>
+<p>5、退出之后输入重启smb命令</p>
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-s1">systemctl</span> <span class="pl-s1">restart</span> <span class="pl-s1">smbd</span>   </pre></div>
+<p>6、完成重启之后就可以在此电脑-网络位置添加外置硬盘了</p>
+<p>输入：\海纳思ip\downloads</p>
+<p>​            \海纳思ip\files</p>
+<p>​             \海纳思ip\home<br>
+<a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/68f9d1f26c9877bc8a762027d864f42c8f18ddc9777cc3c1ec49028dc691e0cf/68747470733a2f2f7777772e6e6f74696f6e2e736f2f696d6167652f687474707325334125324625324670726f642d66696c65732d7365637572652e73332e75732d776573742d322e616d617a6f6e6177732e636f6d25324665373031376538352d653565332d346231352d393839622d63616166396265386462653425324663386562353463322d646433652d346166612d613534622d303534343761393463663561253246696d6167652e706e673f7461626c653d626c6f636b2669643d35366132663930302d376561632d346364382d386261652d39383839636432306236643926743d35366132663930302d376561632d346364382d386261652d3938383963643230623664392677696474683d3831302663616368653d7632"><img src="https://camo.githubusercontent.com/68f9d1f26c9877bc8a762027d864f42c8f18ddc9777cc3c1ec49028dc691e0cf/68747470733a2f2f7777772e6e6f74696f6e2e736f2f696d6167652f687474707325334125324625324670726f642d66696c65732d7365637572652e73332e75732d776573742d322e616d617a6f6e6177732e636f6d25324665373031376538352d653565332d346231352d393839622d63616166396265386462653425324663386562353463322d646433652d346166612d613534622d303534343761393463663561253246696d6167652e706e673f7461626c653d626c6f636b2669643d35366132663930302d376561632d346364382d386261652d39383839636432306236643926743d35366132663930302d376561632d346364382d386261652d3938383963643230623664392677696474683d3831302663616368653d7632" alt="notion image" data-canonical-src="https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2Fe7017e85-e5e3-4b15-989b-caaf9be8dbe4%2Fc8eb54c2-dd3e-4afa-a54b-05447a94cf5a%2Fimage.png?table=block&amp;id=56a2f900-7eac-4cd8-8bae-9889cd20b6d9&amp;t=56a2f900-7eac-4cd8-8bae-9889cd20b6d9&amp;width=810&amp;cache=v2" style="max-width: 100%;"></a></p>
+<h4><strong>BT下载配置文件 下载地址修改</strong></h4>
+<p>1、停止bt下载命令</p>
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-pds"><span class="pl-c1">/</span>etc<span class="pl-c1">/</span>init</span><span class="pl-kos">.</span><span class="pl-c1">d</span><span class="pl-c1">/</span><span class="pl-s1">transmission</span><span class="pl-c1">-</span><span class="pl-s1">daemon</span> <span class="pl-s1">stop</span></pre></div>
+<p>2、输入以下命令进行编辑</p>
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-s1">vi</span> <span class="pl-c1">/</span><span class="pl-s1">etc</span><span class="pl-c1">/</span><span class="pl-s1">transmission</span><span class="pl-c1">-</span><span class="pl-s1">daemon</span><span class="pl-c1">/</span><span class="pl-s1">settings</span><span class="pl-kos">.</span><span class="pl-c1">json</span></pre></div>
+<p>3、进入之后按下insert键，然后将光标移到下图然后修改成/mnt/sda1/downloads<br>
+<a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/244fdccb9fd25ffd522ab71fae56eb4b62a945c5896129fa7e1c65c879103034/68747470733a2f2f7777772e6e6f74696f6e2e736f2f696d6167652f687474707325334125324625324670726f642d66696c65732d7365637572652e73332e75732d776573742d322e616d617a6f6e6177732e636f6d25324665373031376538352d653565332d346231352d393839622d63616166396265386462653425324636653233653532302d343932662d346365612d393034612d396331643665366532616338253246696d6167652e706e673f7461626c653d626c6f636b2669643d36376431663836332d366533652d346162382d383038632d62666333383335623963643426743d36376431663836332d366533652d346162382d383038632d6266633338333562396364342677696474683d3535392663616368653d7632"><img src="https://camo.githubusercontent.com/244fdccb9fd25ffd522ab71fae56eb4b62a945c5896129fa7e1c65c879103034/68747470733a2f2f7777772e6e6f74696f6e2e736f2f696d6167652f687474707325334125324625324670726f642d66696c65732d7365637572652e73332e75732d776573742d322e616d617a6f6e6177732e636f6d25324665373031376538352d653565332d346231352d393839622d63616166396265386462653425324636653233653532302d343932662d346365612d393034612d396331643665366532616338253246696d6167652e706e673f7461626c653d626c6f636b2669643d36376431663836332d366533652d346162382d383038632d62666333383335623963643426743d36376431663836332d366533652d346162382d383038632d6266633338333562396364342677696474683d3535392663616368653d7632" alt="notion image" data-canonical-src="https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2Fe7017e85-e5e3-4b15-989b-caaf9be8dbe4%2F6e23e520-492f-4cea-904a-9c1d6e6e2ac8%2Fimage.png?table=block&amp;id=67d1f863-6e3e-4ab8-808c-bfc3835b9cd4&amp;t=67d1f863-6e3e-4ab8-808c-bfc3835b9cd4&amp;width=559&amp;cache=v2" style="max-width: 100%;"></a><br>
+4、修改完成上面的代码之后按esc（取消） 再输入：wq（退出）</p>
+<p>5、退出之后输入开启bt下载命令</p>
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-pds"><span class="pl-c1">/</span>etc<span class="pl-c1">/</span>init</span><span class="pl-kos">.</span><span class="pl-c1">d</span><span class="pl-c1">/</span><span class="pl-s1">transmission</span><span class="pl-c1">-</span><span class="pl-s1">daemon</span> <span class="pl-s1">start</span></pre></div>
+<p>开启之后回到海纳思首页点开BT下载，在最下方显示可用空间为你外置硬盘的容量就说明挂载成功了<br>
+<a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/0a8a8cf4cf0939219a34cbb4d14d5cd1882d0a8f19dc1e00e985ae94bf7214f2/68747470733a2f2f7777772e6e6f74696f6e2e736f2f696d6167652f687474707325334125324625324670726f642d66696c65732d7365637572652e73332e75732d776573742d322e616d617a6f6e6177732e636f6d25324665373031376538352d653565332d346231352d393839622d63616166396265386462653425324633303737346434612d333337642d343166332d623965342d386365346339333064373566253246696d6167652e706e673f7461626c653d626c6f636b2669643d63643838613061662d663163662d346331372d616463662d34383330353933623638646126743d63643838613061662d663163662d346331372d616463662d3438333035393362363864612677696474683d3630392663616368653d7632"><img src="https://camo.githubusercontent.com/0a8a8cf4cf0939219a34cbb4d14d5cd1882d0a8f19dc1e00e985ae94bf7214f2/68747470733a2f2f7777772e6e6f74696f6e2e736f2f696d6167652f687474707325334125324625324670726f642d66696c65732d7365637572652e73332e75732d776573742d322e616d617a6f6e6177732e636f6d25324665373031376538352d653565332d346231352d393839622d63616166396265386462653425324633303737346434612d333337642d343166332d623965342d386365346339333064373566253246696d6167652e706e673f7461626c653d626c6f636b2669643d63643838613061662d663163662d346331372d616463662d34383330353933623638646126743d63643838613061662d663163662d346331372d616463662d3438333035393362363864612677696474683d3630392663616368653d7632" alt="notion image" data-canonical-src="https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2Fe7017e85-e5e3-4b15-989b-caaf9be8dbe4%2F30774d4a-337d-41f3-b9e4-8ce4c930d75f%2Fimage.png?table=block&amp;id=cd88a0af-f1cf-4c17-adcf-4830593b68da&amp;t=cd88a0af-f1cf-4c17-adcf-4830593b68da&amp;width=609&amp;cache=v2" style="max-width: 100%;"></a></p>
+<h4>直连下载配置文件下载地址修改</h4>
+<p>1、输入以下命令进行编辑</p>
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-s1">vi</span> <span class="pl-c1">/</span><span class="pl-s1">usr</span><span class="pl-c1">/</span><span class="pl-s1">local</span><span class="pl-c1">/</span><span class="pl-s1">aria2</span><span class="pl-c1">/</span><span class="pl-s1">aria2</span><span class="pl-kos">.</span><span class="pl-c1">conf</span></pre></div>
+<p>2、进入之后按下insert键，然后将光标移到下图然后修改成/mnt/sda1/downloads<br>
+<a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/bb430078578836ca1301b519be25136b1a19535ca00d062efe9c5b4af9e0af57/68747470733a2f2f7777772e6e6f74696f6e2e736f2f696d6167652f687474707325334125324625324670726f642d66696c65732d7365637572652e73332e75732d776573742d322e616d617a6f6e6177732e636f6d25324665373031376538352d653565332d346231352d393839622d63616166396265386462653425324662303437353438622d316333662d346535392d616563302d363665613466636565373234253246696d6167652e706e673f7461626c653d626c6f636b2669643d61323862663066302d336631302d346533662d393839662d66353437373834623539316426743d61323862663066302d336631302d346533662d393839662d6635343737383462353931642677696474683d3636362663616368653d7632"><img src="https://camo.githubusercontent.com/bb430078578836ca1301b519be25136b1a19535ca00d062efe9c5b4af9e0af57/68747470733a2f2f7777772e6e6f74696f6e2e736f2f696d6167652f687474707325334125324625324670726f642d66696c65732d7365637572652e73332e75732d776573742d322e616d617a6f6e6177732e636f6d25324665373031376538352d653565332d346231352d393839622d63616166396265386462653425324662303437353438622d316333662d346535392d616563302d363665613466636565373234253246696d6167652e706e673f7461626c653d626c6f636b2669643d61323862663066302d336631302d346533662d393839662d66353437373834623539316426743d61323862663066302d336631302d346533662d393839662d6635343737383462353931642677696474683d3636362663616368653d7632" alt="notion image" data-canonical-src="https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2Fe7017e85-e5e3-4b15-989b-caaf9be8dbe4%2Fb047548b-1c3f-4e59-aec0-66ea4fcee724%2Fimage.png?table=block&amp;id=a28bf0f0-3f10-4e3f-989f-f547784b591d&amp;t=a28bf0f0-3f10-4e3f-989f-f547784b591d&amp;width=666&amp;cache=v2" style="max-width: 100%;"></a><br>
+3、修改完成上面的代码之后按esc（取消） 再输入：wq（退出）</p>
+<p>4、退出之后输入重启smb命令</p>
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-s1">systemctl</span> <span class="pl-s1">restart</span> <span class="pl-s1">aria2c</span><span class="pl-kos">.</span><span class="pl-c1">service</span></pre></div>
+<p>重启之后回到海纳思首页点开直连下载打开aria2设置-基本设置，查看下载路是否已更改到你的硬盘位置，显示硬盘位置说明就已经挂载成功了</p>
+<h3>本地网盘硬盘位置更改</h3>
+<p>进入本地网盘现在位置：</p>
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-s1">cd</span> <span class="pl-c1">/</span><span class="pl-s1">var</span><span class="pl-c1">/</span><span class="pl-s1">www</span><span class="pl-c1">/</span><span class="pl-s1">html</span><span class="pl-c1">/</span><span class="pl-s1">files</span><span class="pl-c1">/</span></pre></div>
+<p>输入删除默认路劲命令</p>
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-s1">rm</span> <span class="pl-s1">home</span></pre></div>
+<p>建立软连接到硬盘</p>
+<div class="highlight highlight-source-js"><pre class="notranslate"><span class="pl-s1">ln</span> <span class="pl-c1">-</span><span class="pl-s1">s</span> <span class="pl-c1">/</span><span class="pl-s1">mnt</span><span class="pl-c1">/</span><span class="pl-s1">sda1</span><span class="pl-c1">/</span><span class="pl-s1">home</span></pre></div></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
